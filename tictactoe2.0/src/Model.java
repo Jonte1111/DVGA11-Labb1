@@ -3,27 +3,28 @@ import java.util.Observable;
 public class Model extends Observable{
 	private int index;
 	private double p;
-	private int player;
+	private String player;
 	private int[] winList;
 	public Model() {
 		winList = new int[9];
 		p = Math.random();
-		firstPlayer();
+		player = "O";
 	}
 	public void firstPlayer() {
 		if(p <= 0.5)
-			this.player = 1;
+			this.player = "X";
 		else
-			this.player = 2;
+			this.player = "O";
+		System.out.println(player);
 	}
-	public int getPlayer() {
+	public String getPlayer() {
 		return this.player;
 	}
 	public void changePlayer() {
-		if(this.player == 1)
-			this.player = 2;
+		if(this.player == "X")
+			this.player = "O";
 		else
-			this.player = 1;
+			this.player = "X";
 	}
 	public int getIndex() {
 		return this.index;
@@ -95,6 +96,15 @@ public class Model extends Observable{
 			//Är i inte en nolla, fortsätt
 			else
 				i++;
+		}
+		return true;
+	}
+	public boolean arrIsEmpty() {
+		for(int i = 0; i < winList.length;) {
+			if(winList[i] == 0)
+			i++;
+			else 
+				return false;
 		}
 		return true;
 	}
