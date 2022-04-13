@@ -24,7 +24,7 @@ public class View extends JFrame implements Observer{
 	private Controller controller;
 	private JPanel spelPlan, turnPanel;
 	private ArrayList<JButton> buttonList;
-	private JLabel score1, score2, ikonLabel, colorScore1, colorScore2, currPlayerText, currPlayerColor; //score1/2 texten innan poäng, colorScore1/2 färgade siffror
+	private JLabel score1, score2, ikonLabel, currPlayerText;
 	private JOptionPane popUp;
 	private BorderLayout b;
 	private Model model;
@@ -48,7 +48,6 @@ public class View extends JFrame implements Observer{
 		orange = new Color(252, 107, 3);
 		green = new Color(3, 252, 69);
 		turnPanel.setBackground(Color.DARK_GRAY);
-		//Skapar en ny ikon
 		ikon = new ImageIcon(this.getClass().getResource("/tttlogo.png"), "En vacker syn");
 		//Hittade en tråd om hur man ändrar storleken på en ImageIcon
 		//https://stackoverflow.com/questions/6714045/how-to-resize-jlabel-imageicon
@@ -56,25 +55,13 @@ public class View extends JFrame implements Observer{
 		resize2 = resize.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH); 
 		ikon = new ImageIcon(resize2);
 		ikonLabel = new JLabel(ikon, JLabel.CENTER);
-		//score1.setText("<html>Poäng <font color=#fc6b03> X: </font>" + " " + xScore + "</html>");
-		//score2.setText("<html>Poäng <font color=#03fc45> O: </font>" + " " + oScore + "</html>");
 		score1 = new JLabel("<html>Poäng <font color=#fc6b03> X: </font>" + " " + xScore + "</html>");//<font color=xxxxxx></font> ändrar färgen på det innanför taggen
 		score2 = new JLabel("<html>Poäng <font color=#03fc45> O: </font>" + " " + oScore + "</html>");
 		score1.setForeground(Color.white);
 		score2.setForeground(Color.white);
 		currPlayerText = new JLabel("<html><font color=#03fc45>O</font>'s tur" + "</html>");
 		currPlayerText.setForeground(Color.white);
-		//("<html><font color=#fc6b03>X</font>'s tur" + "</html>");
-		//currPlayerColor = new JLabel(model.getPlayer());
-		//colorScore1 = new JLabel(xScore + ""); //JLabel behöver en string så kör en fullösning med + ""
-		//colorScore2 = new JLabel(oScore + "");
 		popUp = new JOptionPane();
-		//if(model.getPlayer() == "X")
-			//currPlayerColor.setForeground(orange);
-		//else
-			//currPlayerColor.setForeground(green);
-		//colorScore1.setForeground(new Color(252, 107, 3));
-		//colorScore2.setForeground(new Color(3, 252, 69));
 		setVisible(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setSize(600,600);
@@ -84,11 +71,8 @@ public class View extends JFrame implements Observer{
 		spelPlan.setLayout(new GridLayout(3,3));
 		turnPanel.add(ikonLabel);
 		turnPanel.add(score1);
-		//turnPanel.add(colorScore1);
-		//turnPanel.add(currPlayerColor);
-		turnPanel.add(currPlayerText); //Sätt currentPlayer här
+		turnPanel.add(currPlayerText);
 		turnPanel.add(score2);
-		//turnPanel.add(colorScore2);
 		for(int i = 0; i < 9; i++) {
 			buttonList.add(new JButton(""));
 		}
@@ -107,20 +91,10 @@ public class View extends JFrame implements Observer{
 	}
 	@Override
 	public void update(Observable o, Object arg) {
-		// TODO Auto-generated method stub
 			Model model = (Model)o; //Utan denna funkar inte ActionListeners
-			/*if(model.arrIsEmpty()) {
-				if(model.getPlayer() == "X") {
-					this.currP = "X";
-					currPlayerText.setText(currP);
-				}
-				else
-					this.currP = "O";
-				System.out.println(currP);
-			} */
+		
 			if(buttonList.get(model.getIndex()).getText() == "" && model.getPlayer() == "X") {
 				model.changePlayer();
-				//currPlayerColor.setForeground(green);
 				currPlayerText.setText("<html><font color=#03fc45>O</font>'s tur" + "</html>");
 				buttonList.get(model.getIndex()).setForeground(orange);
 				buttonList.get(model.getIndex()).setText("X");
@@ -128,7 +102,6 @@ public class View extends JFrame implements Observer{
 			}
 			else if(buttonList.get(model.getIndex()).getText() == "" && model.getPlayer() == "O"){
 				model.changePlayer();
-				//currPlayerColor.setForeground(orange);
 				currPlayerText.setText("<html><font color=#fc6b03>X</font>'s tur" + "</html>");
 				buttonList.get(model.getIndex()).setForeground(green);
 				buttonList.get(model.getIndex()).setText("O");
@@ -143,11 +116,9 @@ public class View extends JFrame implements Observer{
 				tomLista();
 				model.firstPlayer();
 				if(model.getPlayer() == "X") {
-					//currPlayerColor.setForeground(orange);
 					currPlayerText.setText("<html><font color=#fc6b03>X</font>'s tur" + "</html>");
 				}
 				else {
-					//currPlayerColor.setForeground(green);
 					currPlayerText.setText("<html><font color=#03fc45>O</font>'s tur" + "</html>");
 				}
 				
@@ -161,11 +132,9 @@ public class View extends JFrame implements Observer{
 				tomLista();
 				model.firstPlayer();
 				if(model.getPlayer() == "X") {
-					//currPlayerColor.setForeground(orange);
 					currPlayerText.setText("<html><font color=#fc6b03>X</font>'s tur" + "</html>");
 				}
 				else {
-					//currPlayerColor.setForeground(green);
 					currPlayerText.setText("<html><font color=#03fc45>O</font>'s tur" + "</html>");
 				}
 			}
@@ -176,11 +145,9 @@ public class View extends JFrame implements Observer{
 				tomLista();
 				model.firstPlayer();
 				if(model.getPlayer() == "X") {
-					//currPlayerColor.setForeground(orange);
 					currPlayerText.setText("<html><font color=#fc6b03>X</font>'s tur" + "</html>");
 				}
 				else {
-					//currPlayerColor.setForeground(green);
 					currPlayerText.setText("<html><font color=#03fc45>O</font>'s tur" + "</html>");
 				}
 			}
@@ -191,7 +158,6 @@ public class View extends JFrame implements Observer{
 			button.setText("");
 	}
 	private void winPopUp(String vinnare) {
-		popUp.setBackground(Color.DARK_GRAY);
 		popUp.showMessageDialog(this, vinnare);
 	}
 
